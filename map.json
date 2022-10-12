@@ -1,0 +1,61 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Road Crashes in Victoria (July 2015 - June 2020)",
+  "width": 800,
+  "height": 450,
+  "data": {
+    "url": "https://raw.githubusercontent.com/JiayueJoyHuang/FIT3179/main/LGA%20-%20copied.topojson",
+    "format": {
+      "type": "topojson",
+      "feature": "VICLGAgeojson"
+    }
+  },
+  "encoding": {
+    "tooltip": [
+      {
+        "field": "properties.vic_lga__3",
+        "type": "nominal",
+        "title": "LGA"
+      },
+      {
+        "field": "INJ_OR_FATAL",
+        "type": "quantitative",
+        "title": "Number of injuries and fatalities"
+      }
+    ]
+  },
+  "layer": [
+    {
+      "transform": [
+        {
+          "lookup": "properties.vic_lga__3",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/JiayueJoyHuang/FIT3179/main/map_data.csv"
+            },
+            "key": "LGA",
+            "fields": [
+              "INJ_OR_FATAL"
+            ]
+          }
+        }
+      ],
+      "mark": {
+        "type": "geoshape"
+      },
+      "encoding": {
+        "color": {
+          "field": "INJ_OR_FATAL",
+          "type": "quantitative",
+          "title": [
+            "Number of injuries and fatalities"
+          ],
+          "scale": {
+            "type": "threshold",
+            "domain": [500, 1000, 1500, 2000, 2500]
+          }
+        }
+      }
+    }
+  ]
+}
